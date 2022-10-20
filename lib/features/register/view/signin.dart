@@ -90,13 +90,18 @@ class SigninPage extends StatelessWidget {
                 kheight,
                 Row(
                   children: [
-                    Checkbox(
-                      splashRadius: 10,
-                      checkColor: kWhite,
-                      activeColor: const Color.fromARGB(255, 99, 100, 100),
-                      value: false,
-                      onChanged: (value) {},
-                    ),
+                    Consumer<SigninController>(
+                        builder: (context, value, child) {
+                      return Checkbox(
+                        splashRadius: 10,
+                        checkColor: kWhite,
+                        activeColor: const Color.fromARGB(255, 99, 100, 100),
+                        value: provider.isCheck,
+                        onChanged: (value) {
+                          provider.isCheck = !provider.isCheck;
+                        },
+                      );
+                    }),
                     const Text(
                       'Remember me',
                       style: TextStyle(

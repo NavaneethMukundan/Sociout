@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sociout/features/main/view/main_screen.dart';
 import 'package:sociout/features/register/model/login/login_model.dart';
 import 'package:sociout/features/register/model/login/login_response.dart';
@@ -28,6 +29,9 @@ class SigninController extends ChangeNotifier {
         _isLoadingFalse();
         return;
       } else if (loginResponse.loggedin == true) {
+        final preference = await SharedPreferences.getInstance();
+        preference.setString('token', loginResponse.token.toString());
+        await preference.setBool('loggedin', true);
         RouteNavigator.pushRemoveUntil(context, MainScreen());
         _isLoadingFalse();
         return;
@@ -56,6 +60,20 @@ class SigninController extends ChangeNotifier {
     _isHidden = value;
     notifyListeners();
   }
+
+  bool _isCheck = false;
+  get isCheck => _isCheck;
+  set isCheck(value) {
+    _isCheck = value;
+    notifyListeners();
+  }
+
+  //   bool _isRemember = true;
+  // get isRemember => _isRemember;
+  // set isRemember(value) {
+  //   _isRemember = value;
+  //   notifyListeners();
+  // }
 
   void disposes() {
     signinKey.currentState!.reset();

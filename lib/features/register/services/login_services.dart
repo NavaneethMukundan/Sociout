@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:sociout/features/register/model/login/login_model.dart';
 import 'package:sociout/features/register/model/login/login_response.dart';

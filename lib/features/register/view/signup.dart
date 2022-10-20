@@ -121,18 +121,23 @@ class SignupScreen extends StatelessWidget {
                       hiddentext: value.isHidden ? false : true,
                       validatorErrorMessage: "Please enter Password",
                     );
-                  },     
+                  },
                 ),
                 kheight,
                 Row(
                   children: [
-                    Checkbox(
-                      splashRadius: 10,
-                      checkColor: kWhite,
-                      activeColor: const Color.fromARGB(255, 99, 100, 100),
-                      value: false,
-                      onChanged: (value) {},
-                    ),
+                    Consumer<SignupController>(
+                        builder: (context, value, child) {
+                      return Checkbox(
+                        splashRadius: 10,
+                        checkColor: kWhite,
+                        activeColor: const Color.fromARGB(255, 99, 100, 100),
+                        value: provider.isCheck,
+                        onChanged: (value) {
+                          provider.isCheck = !provider.isCheck;
+                        },
+                      );
+                    }),
                     const Text(
                       'Remember me',
                       style: TextStyle(

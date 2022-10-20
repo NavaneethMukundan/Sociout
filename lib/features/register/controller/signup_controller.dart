@@ -29,7 +29,7 @@ class SignupController extends ChangeNotifier {
 
       if (registerResponse == null) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(ShowDialogs.popUp('No Response'));
+            .showSnackBar(ShowDialogs.popUp('Some data is already in used'));
         _isLoadingFalse();
         return;
       } else if (registerResponse.loggedin == true) {
@@ -59,6 +59,13 @@ class SignupController extends ChangeNotifier {
   get isHidden => _isHidden;
   set isHidden(value) {
     _isHidden = value;
+    notifyListeners();
+  }
+
+  bool _isCheck = false;
+  get isCheck => _isCheck;
+  set isCheck(value) {
+    _isCheck = value;
     notifyListeners();
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sociout/features/main/view/onboard.dart';
+import 'package:provider/provider.dart';
+import 'package:sociout/features/main/controller/splash.dart';
 import 'package:sociout/utils/colors.dart';
-import 'package:sociout/utils/route.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    toOnboard(context);
+    Provider.of<SplashController>(context, listen: false).splashCheck(context);
     super.initState();
   }
 
@@ -40,10 +40,5 @@ class _SplashPageState extends State<SplashPage> {
         ]),
       ),
     );
-  }
-
-  Future<void> toOnboard(context) async {
-    await Future.delayed(const Duration(seconds: 3));
-    RouteNavigator.pushReplacement(context, const OnBoardPage());
   }
 }

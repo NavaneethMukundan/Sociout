@@ -56,9 +56,8 @@ class OnBoardPage extends StatelessWidget {
             RouteNavigator.pushRemoveUntil(context, const SigninPage());
           },
           style: ElevatedButton.styleFrom(
-              shape: const CircleBorder(),
-              minimumSize: const Size(60, 100),
-              primary: mainColor),
+              shape: const CircleBorder(), backgroundColor: mainColor,
+              minimumSize: const Size(60, 100)),
           child: const Icon(Icons.arrow_right_alt_sharp)),
     );
   }

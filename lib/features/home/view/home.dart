@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:sociout/features/home/controller/home.dart';
 import 'package:sociout/utils/colors.dart';
 import 'package:sociout/utils/constraints.dart';
 
@@ -8,6 +10,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<HomeController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -24,9 +27,11 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                provider.logout(context);
+              },
               icon: const Icon(
-                Icons.more_vert_sharp,
+                Icons.logout,
                 color: kBlack,
               ))
         ],
@@ -160,9 +165,7 @@ class PostButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {
-          ontap() {}
-        },
+        onPressed: () {},
         style: ElevatedButton.styleFrom(
             backgroundColor: kWhite, minimumSize: const Size(80, 40)),
         child: Column(
