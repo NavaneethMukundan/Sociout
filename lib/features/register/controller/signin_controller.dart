@@ -68,13 +68,6 @@ class SigninController extends ChangeNotifier {
     notifyListeners();
   }
 
-  //   bool _isRemember = true;
-  // get isRemember => _isRemember;
-  // set isRemember(value) {
-  //   _isRemember = value;
-  //   notifyListeners();
-  // }
-
   void disposes() {
     signinKey.currentState!.reset();
     emailController.clear();
