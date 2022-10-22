@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sociout/features/create/controller/job_post.dart';
+import 'package:sociout/features/create/widgets/image_obtain.dart';
 import 'package:sociout/features/create/widgets/radio_button.dart';
 import 'package:sociout/utils/colors.dart';
 import 'package:sociout/utils/constraints.dart';
@@ -35,7 +36,7 @@ class JobCreate extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
-          child: Form(  
+          child: Form(
             key: provider.jobFormKey,
             child: Column(
               children: [
@@ -49,28 +50,20 @@ class JobCreate extends StatelessWidget {
                 kheight40,
                 Row(
                   children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Image.network(
-                        'https://static.thenounproject.com/png/396915-200.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                    ImageObtainWidget(),
                     kWidth20,
                     Expanded(
                       child: Column(
                         children: [
                           TextFormWidget(
+                            keyboardtype: TextInputType.text,
                             controller: provider.companyName,
                             text: 'Company Name',
                             validatorErrorMessage: 'Please Enter Company Name',
                           ),
                           kheight,
                           TextFormWidget(
+                            keyboardtype: TextInputType.text,
                             validatorErrorMessage: 'Please Enter place',
                             text: 'Place',
                             controller: provider.companyPlace,
@@ -85,6 +78,7 @@ class JobCreate extends StatelessWidget {
                   children: [
                     Expanded(
                         child: TextFormWidget(
+                      keyboardtype: TextInputType.text,
                       validatorErrorMessage: 'Please Enter State',
                       text: 'State',
                       controller: provider.companystate,
@@ -92,6 +86,7 @@ class JobCreate extends StatelessWidget {
                     kWidth10,
                     Expanded(
                         child: TextFormWidget(
+                      keyboardtype: TextInputType.text,
                       validatorErrorMessage: 'Please Enter Country',
                       text: 'Country',
                       controller: provider.companyCountry,
@@ -110,39 +105,48 @@ class JobCreate extends StatelessWidget {
                   children: [
                     Expanded(
                         child: TextFormWidget(
-                      validatorErrorMessage: 'Please Enter Job Designation',
+                      keyboardtype: TextInputType.text,
+                      validatorErrorMessage: 'Job Designation required',
                       text: 'Job Designation ',
                       controller: provider.jobDesignation,
                     )),
                     kWidth10,
                     Expanded(
                         child: TextFormWidget(
+                            keyboardtype: TextInputType.text,
                             validatorErrorMessage: 'Please Enter Job vacancies',
                             text: 'Job Vacancies ',
                             controller: provider.jobVaccancies)),
                   ],
                 ),
                 kheight20,
-                const RadioButton(),
+                RadioButton(),
                 kheight,
                 Row(
                   children: [
-                    DropdownButton<String>(
-                      elevation: 5,
-                      iconEnabledColor: kBlack,
-                      hint: const Text(
-                        'Choose',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      items: <String>['Full Time', 'Part Time', 'Remote']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
+                    Consumer<JobPostController>(
+                      builder: (context, value, child) {
+                        return DropdownButton<String>(
+                          elevation: 5,
+                          iconEnabledColor: kBlack,
+                          hint: Text(
+                            value.dropdownValue,
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          items: ['Full Time', 'Part Time', 'Remote']
+                              .map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (String? newValue) {
+                            value.dropdownValue = newValue!;
+                            value.notifyListeners();
+                          },
                         );
-                      }).toList(),
-                      onChanged: (_) {},
+                      },
                     ),
                     const SizedBox(
                       width: 40,
@@ -155,7 +159,8 @@ class JobCreate extends StatelessWidget {
                     kWidth,
                     Expanded(
                         child: TextFormWidget(
-                            validatorErrorMessage: 'Salary is Required',
+                            keyboardtype: TextInputType.number,
+                            validatorErrorMessage: 'Required',
                             text: '',
                             controller: provider.minSalary)),
                     kWidth10,
@@ -167,13 +172,15 @@ class JobCreate extends StatelessWidget {
                     kWidth10,
                     Expanded(
                         child: TextFormWidget(
-                            validatorErrorMessage: 'Salary is Required',
+                            keyboardtype: TextInputType.number,
+                            validatorErrorMessage: 'Required',
                             text: '',
                             controller: provider.maxSalary))
                   ],
                 ),
                 kheight20,
-                TextField(
+                TextFormField(
+                  controller: provider.jobDiscription,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   maxLength: 400,
@@ -193,11 +200,18 @@ class JobCreate extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         borderSide: const BorderSide(color: kBlack),
                       )),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Discription is Required';
+                    }
+                    return null;
+                  },
                 ),
                 kheight,
                 ElevatedButton(
                     onPressed: () {
-                      provider.validator(context);
+                      provider.jobPostButton(context);
+                      //provider.dispos(context);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: kBlack,
@@ -214,19 +228,22 @@ class JobCreate extends StatelessWidget {
 }
 
 class TextFormWidget extends StatelessWidget {
-  const TextFormWidget({
-    Key? key,
-    required this.text,
-    required this.controller,
-    required this.validatorErrorMessage,
-  }) : super(key: key);
+  const TextFormWidget(
+      {Key? key,
+      required this.text,
+      required this.controller,
+      required this.validatorErrorMessage,
+      this.keyboardtype = TextInputType.number})
+      : super(key: key);
   final String text;
   final TextEditingController controller;
   final String validatorErrorMessage;
+  final TextInputType keyboardtype;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardtype,
       controller: controller,
       decoration: InputDecoration(
           hintText: text,

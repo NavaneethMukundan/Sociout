@@ -9,7 +9,7 @@ class JobResponseModel {
   factory JobResponseModel.fromJson(Map<String, dynamic> json) =>
       JobResponseModel(
         message: json["message"] ?? '',
-        success: json["sucess"] ?? false,
+        success: json["success"] ?? false,
         stack: json["stack"] ?? '',
         status: json["status"] ?? 0,
       );

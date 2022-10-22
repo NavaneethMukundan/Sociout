@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:sociout/features/register/model/login/login_model.dart';
 import 'package:sociout/features/register/model/login/login_response.dart';
-import 'package:sociout/features/register/services/dio_services.dart';
+import 'package:sociout/services/dio_services.dart';
 import 'package:sociout/services/connection_check.dart';
 import 'package:sociout/utils/url.dart';
 

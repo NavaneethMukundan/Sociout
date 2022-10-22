@@ -1,5 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sociout/features/main/view/main_screen.dart';
 import 'package:sociout/features/register/model/login/login_model.dart';
 import 'package:sociout/features/register/model/login/login_response.dart';
@@ -29,9 +31,8 @@ class SigninController extends ChangeNotifier {
         _isLoadingFalse();
         return;
       } else if (loginResponse.loggedin == true) {
-        final preference = await SharedPreferences.getInstance();
-        preference.setString('token', loginResponse.token.toString());
-        await preference.setBool('loggedin', true);
+        log(loginResponse.token.toString());
+        await storeDataLogin(value: loginResponse);
         RouteNavigator.pushRemoveUntil(context, MainScreen());
         _isLoadingFalse();
         return;
@@ -74,5 +75,13 @@ class SigninController extends ChangeNotifier {
     passwordController.clear();
     isHidden = true;
     notifyListeners();
+  }
+
+  FlutterSecureStorage storage = const FlutterSecureStorage();
+  Future<void> storeDataLogin({required LoginResponse value}) async {
+    await storage.write(key: 'token', value: value.token!);
+    await storage.write(key: 'id', value: value.id!);
+    await storage.write(key: 'loggedin', value: value.loggedin!.toString());
+    await storage.write(key: 'login', value: "true");
   }
 }

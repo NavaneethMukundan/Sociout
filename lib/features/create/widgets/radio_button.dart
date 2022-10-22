@@ -5,9 +5,11 @@ import 'package:sociout/features/create/view/job_create.dart';
 import 'package:sociout/utils/constraints.dart';
 
 class RadioButton extends StatelessWidget {
-  const RadioButton({
+  RadioButton({
     Key? key,
   }) : super(key: key);
+
+  final globalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class RadioButton extends StatelessWidget {
     return Column(
       children: [
         Row(
-          // key: provider.jobFormKey,
+          key: globalKey,
           children: [
             Expanded(
               child: RadioListTile(
@@ -25,6 +27,7 @@ class RadioButton extends StatelessWidget {
                 onChanged: (value) {
                   provider.radioButton('Fresher');
                   provider.displayNewTextfield = false;
+                  provider.jobType = value.toString();
                 },
               ),
             ),
@@ -36,6 +39,7 @@ class RadioButton extends StatelessWidget {
                 groupValue: provider.groupValue,
                 onChanged: (value) {
                   provider.radioButton('Experenced');
+                  provider.jobType = value.toString();
                   provider.displayNewTextfield = true;
                 },
               ),
@@ -53,7 +57,7 @@ class RadioButton extends StatelessWidget {
                     child: SizedBox(
                         height: 70,
                         child: TextFormWidget(
-                            validatorErrorMessage: 'Experience is Required',
+                            validatorErrorMessage: 'Required',
                             text: '0',
                             controller: provider.minExp))),
                 kWidth20,
@@ -66,7 +70,7 @@ class RadioButton extends StatelessWidget {
                     child: SizedBox(
                         height: 70,
                         child: TextFormWidget(
-                            validatorErrorMessage: 'Experience is Required',
+                            validatorErrorMessage: 'Required',
                             text: '0',
                             controller: provider.maxExp))),
               ],
