@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sociout/features/create/model/job_post.dart';
 import 'package:sociout/features/create/model/job_response.dart';
 import 'package:sociout/features/create/services/job_create_services.dart';
+import 'package:sociout/features/jobs/view/posted_jobs.dart';
 import 'package:sociout/features/main/view/main_screen.dart';
 import 'package:sociout/utils/route.dart';
 import 'package:sociout/utils/snackbar.dart';
@@ -22,22 +23,20 @@ class JobPostController extends ChangeNotifier {
   final jobFormKey = GlobalKey<FormState>();
   String dropdownValue = 'Select';
   String jobType = '';
+  JobResponseModel? jobrespo;
 
   void jobPostButton(context) async {
     if (jobFormKey.currentState!.validate() && jobType.isNotEmpty) {
       isloading = true;
       notifyListeners();
 
-      // FlutterSecureStorage storage = const FlutterSecureStorage();
-      // String? token = await storage.read(key: "token");
-
       final jobObj = JobPostModel(
         company: companyName.text,
         country: companyCountry.text,
         description: jobDiscription.text,
         designation: jobDesignation.text,
-        jobFor: dropdownValue,
-        jobType: jobType,
+        jobFor: jobType,
+        jobType: dropdownValue,
         place: companyPlace.text,
         salaryMax: maxSalary.text,
         salaryMin: minSalary.text,

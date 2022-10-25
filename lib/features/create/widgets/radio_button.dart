@@ -50,28 +50,25 @@ class RadioButton extends StatelessWidget {
             visible: provider.displayNewTextfield,
             child: Row(
               children: [
-                const SizedBox(
-                  width: 150,
-                ),
                 Expanded(
                     child: SizedBox(
                         height: 70,
                         child: TextFormWidget(
                             validatorErrorMessage: 'Required',
-                            text: '0',
+                            text: 'Min Experience',
                             controller: provider.minExp))),
-                kWidth20,
+                kWidth10,
                 const Text(
                   'to',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                 ),
-                kWidth20,
+                kWidth10,
                 Expanded(
                     child: SizedBox(
                         height: 70,
                         child: TextFormWidget(
                             validatorErrorMessage: 'Required',
-                            text: '0',
+                            text: 'Min Experience',
                             controller: provider.maxExp))),
               ],
             ))

@@ -12,7 +12,7 @@ class JobCreate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<JobPostController>(context, listen: false);
+    final provider = Provider.of<JobPostController>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
@@ -39,13 +39,15 @@ class JobCreate extends StatelessWidget {
           child: Form(
             key: provider.jobFormKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 kheight20,
-                const Center(
-                  child: Text(
-                    'Company Details',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
+                const Text(
+                  'Company Details',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                const Divider(
+                  thickness: 1,
                 ),
                 kheight40,
                 Row(
@@ -94,11 +96,12 @@ class JobCreate extends StatelessWidget {
                   ],
                 ),
                 kheight20,
-                const Center(
-                  child: Text(
-                    'Job Details',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
+                const Text(
+                  'Job Details',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                const Divider(
+                  thickness: 1,
                 ),
                 kheight20,
                 Row(
@@ -122,35 +125,32 @@ class JobCreate extends StatelessWidget {
                 kheight20,
                 RadioButton(),
                 kheight,
+                Consumer<JobPostController>(
+                  builder: (context, value, child) {
+                    return DropdownButton<String>(
+                      elevation: 5,
+                      iconEnabledColor: kBlack,
+                      hint: Text(
+                        value.dropdownValue,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      items: ['Full Time', 'Part Time', 'Remote']
+                          .map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        value.dropdownValue = newValue!;
+                        value.notifyListeners();
+                      },
+                    );
+                  },
+                ),
                 Row(
                   children: [
-                    Consumer<JobPostController>(
-                      builder: (context, value, child) {
-                        return DropdownButton<String>(
-                          elevation: 5,
-                          iconEnabledColor: kBlack,
-                          hint: Text(
-                            value.dropdownValue,
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          items: ['Full Time', 'Part Time', 'Remote']
-                              .map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            value.dropdownValue = newValue!;
-                            value.notifyListeners();
-                          },
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      width: 40,
-                    ),
                     const Text(
                       '₹',
                       style:
@@ -161,7 +161,7 @@ class JobCreate extends StatelessWidget {
                         child: TextFormWidget(
                             keyboardtype: TextInputType.number,
                             validatorErrorMessage: 'Required',
-                            text: '',
+                            text: 'Min Salary',
                             controller: provider.minSalary)),
                     kWidth10,
                     const Text(
@@ -174,9 +174,12 @@ class JobCreate extends StatelessWidget {
                         child: TextFormWidget(
                             keyboardtype: TextInputType.number,
                             validatorErrorMessage: 'Required',
-                            text: '',
+                            text: 'Max Salary',
                             controller: provider.maxSalary))
                   ],
+                ),
+                const SizedBox(
+                  width: 40,
                 ),
                 kheight20,
                 TextFormField(
@@ -186,7 +189,7 @@ class JobCreate extends StatelessWidget {
                   maxLength: 400,
                   decoration: InputDecoration(
                       // contentPadding: const EdgeInsets.only(top: 10),
-                      hintText: 'type...',
+                      labelText: 'Description',
                       hintStyle: const TextStyle(
                         fontSize: 20,
                       ),
@@ -194,11 +197,9 @@ class JobCreate extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20)),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                        borderSide: const BorderSide(color: kBlack),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                        borderSide: const BorderSide(color: kBlack),
                       )),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -208,15 +209,19 @@ class JobCreate extends StatelessWidget {
                   },
                 ),
                 kheight,
-                ElevatedButton(
-                    onPressed: () {
-                      provider.jobPostButton(context);
-                      //provider.dispos(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: kBlack,
-                        minimumSize: const Size(100, 50)),
-                    child: const Text('Post')),
+                Center(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        provider.isloading
+                            ? const CircularProgressIndicator()
+                            : provider.jobPostButton(context);
+                        provider.dispos(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: kBlack,
+                          minimumSize: const Size(100, 50)),
+                      child: const Text('Post')),
+                ),
                 kheight
               ],
             ),
@@ -246,7 +251,7 @@ class TextFormWidget extends StatelessWidget {
       keyboardType: keyboardtype,
       controller: controller,
       decoration: InputDecoration(
-          hintText: text,
+          labelText: text,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
       validator: (value) {
         if (value == null || value.isEmpty) {

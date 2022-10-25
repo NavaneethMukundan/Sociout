@@ -22,7 +22,7 @@ class RandomJobsWidget extends StatelessWidget {
                   kWidth10,
                   const Expanded(
                     child: Text(
-                      'Senior UX Designer',
+                      'Flutter Developer',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

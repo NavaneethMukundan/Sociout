@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sociout/features/jobs/controller/posted_job.dart';
+import 'package:sociout/features/jobs/view/posted_jobs.dart';
 import 'package:sociout/features/jobs/widgets/random_job.dart';
 import 'package:sociout/utils/colors.dart';
 import 'package:sociout/utils/constraints.dart';
+import 'package:sociout/utils/route.dart';
 
 class JobsPage extends StatelessWidget {
   const JobsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<PostedJobsController>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -60,11 +65,27 @@ class JobsPage extends StatelessWidget {
                 ],
               ),
               kheight20,
-              const Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  'Recommended for you',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  children: [
+                    const Text(
+                      'Recommended for you',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const Spacer(),
+                    TextButton(
+                        onPressed: () async {
+                          await provider.getAllJobs(context);
+                          RouteNavigator.pushRoute(
+                              context, const ViewPostedJobs());
+                        },
+                        child: const Text(
+                          'Your Jobs ->',
+                          style: TextStyle(color: kBlack),
+                        ))
+                  ],
                 ),
               ),
               ListView.separated(

@@ -13,11 +13,6 @@ class JobCreateServices {
     if (await connectionCheck()) {
       try {
         Response response = await dios.post(Url().jobPost, data: data.tojson());
-        // final response = await DioServices.postFunction(
-        //   url: Url().jobPost,
-        //   value: data.tojson(),
-        // );
-
         if (response.statusCode! >= 200 && response.statusCode! <= 299) {
           log('data added succesfully');
           return JobResponseModel.fromJson(response.data);
