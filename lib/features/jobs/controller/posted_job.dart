@@ -7,11 +7,12 @@ import 'package:sociout/utils/snackbar.dart';
 class PostedJobsController extends ChangeNotifier {
   List<Postedjobsmodel> alljobs = [];
   bool isLoading = false;
+
   PostedJobsController(context) {
     getAllJobs(context);
   }
 
-  getAllJobs(context) async {
+  Future<void> getAllJobs(context) async {
     isLoading = true;
     notifyListeners();
     if (await connectionCheck()) {
@@ -31,9 +32,10 @@ class PostedJobsController extends ChangeNotifier {
         isLoadingFalse();
         notifyListeners();
       }
-    }else{
+    } else {
       ShowDialogs.popUp("No internet");
     }
+    isLoadingFalse();
     notifyListeners();
   }
 

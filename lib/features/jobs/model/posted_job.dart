@@ -18,6 +18,7 @@ class Postedjobsmodel {
     this.jobType,
     this.salaryMin,
     this.salaryMax,
+    this.image,
     this.applicationStatus,
     this.isBlocked,
     this.isOpen,
@@ -38,6 +39,7 @@ class Postedjobsmodel {
   String? description;
   String? vacancy;
   String? jobType;
+  String? image;
   int? salaryMin;
   int? salaryMax;
   List<dynamic>? applicationStatus;
@@ -61,6 +63,7 @@ class Postedjobsmodel {
         description: json["description"],
         vacancy: json["vacancy"],
         jobType: json["jobType"],
+        image: json["image"],
         salaryMin: json["salaryMin"],
         salaryMax: json["salaryMax"],
         applicationStatus:

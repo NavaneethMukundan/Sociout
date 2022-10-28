@@ -125,29 +125,32 @@ class JobCreate extends StatelessWidget {
                 kheight20,
                 RadioButton(),
                 kheight,
-                Consumer<JobPostController>(
-                  builder: (context, value, child) {
-                    return DropdownButton<String>(
-                      elevation: 5,
-                      iconEnabledColor: kBlack,
-                      hint: Text(
-                        value.dropdownValue,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      items: ['Full Time', 'Part Time', 'Remote']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        value.dropdownValue = newValue!;
-                        value.notifyListeners();
-                      },
-                    );
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(left: 25, bottom: 10),
+                  child: Consumer<JobPostController>(
+                    builder: (context, value, child) {
+                      return DropdownButton<String>(
+                        elevation: 5,
+                        iconEnabledColor: kBlack,
+                        hint: Text(
+                          value.dropdownValue,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        items: ['Full Time', 'Part Time', 'Remote']
+                            .map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          value.dropdownValue = newValue!;
+                          value.notifyListeners();
+                        },
+                      );
+                    },
+                  ),
                 ),
                 Row(
                   children: [
@@ -212,10 +215,11 @@ class JobCreate extends StatelessWidget {
                 Center(
                   child: ElevatedButton(
                       onPressed: () {
-                        provider.isloading
-                            ? const CircularProgressIndicator()
-                            : provider.jobPostButton(context);
-                        provider.dispos(context);
+                        // provider.isloading
+                        //     ? const CircularProgressIndicator()
+                        //     :
+                        provider.jobPostButton(context);
+                        // provider.dispos(context);
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: kBlack,
@@ -251,8 +255,18 @@ class TextFormWidget extends StatelessWidget {
       keyboardType: keyboardtype,
       controller: controller,
       decoration: InputDecoration(
-          labelText: text,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))),
+        labelText: text,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: kBlack),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: kBlack),
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return validatorErrorMessage;

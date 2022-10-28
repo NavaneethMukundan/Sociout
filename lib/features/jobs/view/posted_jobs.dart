@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sociout/features/jobs/controller/posted_job.dart';
@@ -11,7 +13,7 @@ class ViewPostedJobs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<PostedJobsController>(context);
+    final provider = Provider.of<PostedJobsController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -33,6 +35,15 @@ class ViewPostedJobs extends StatelessWidget {
                 fontSize: 30, fontWeight: FontWeight.bold, color: kBlack),
           ),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.bookmark_added_rounded,
+                color: kBlack,
+                size: 35,
+              ))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16),
@@ -72,11 +83,13 @@ class ViewPostedJobs extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(5),
                                         color: const Color.fromARGB(
                                             255, 224, 223, 223),
-                                        image: const DecorationImage(
+                                        image: DecorationImage(
                                             fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                              'https://blog.hubspot.com/hubfs/image8-2.jpg',
-                                            ))),
+                                            image: MemoryImage(
+                                                const Base64Decoder().convert(
+                                                    provider
+                                                        .alljobs[index].image
+                                                        .toString())))),
                                   ),
                                   kWidth10,
                                   Column(

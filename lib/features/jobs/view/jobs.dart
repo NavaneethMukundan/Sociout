@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sociout/features/jobs/controller/posted_job.dart';
+import 'package:sociout/features/jobs/view/job_search.dart';
 import 'package:sociout/features/jobs/view/posted_jobs.dart';
 import 'package:sociout/features/jobs/widgets/random_job.dart';
 import 'package:sociout/utils/colors.dart';
@@ -32,38 +33,7 @@ class JobsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          //contentPadding: const EdgeInsets.all(16),
-                          prefixIcon: const Icon(
-                            Icons.search,
-                            color: kBlack,
-                          ),
-                          hintText: 'Search...',
-                          hintStyle: const TextStyle(color: kBlack),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(color: kBlack),
-                          )),
-                    ),
-                  ),
-                  kWidth10,
-                  ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: kBlack,
-                          minimumSize: const Size(50, 50)),
-                      child: const Icon(
-                        Icons.filter_list,
-                        color: kWhite,
-                      ))
-                ],
-              ),
+              const JobSearchPage(),
               kheight20,
               Padding(
                 padding: const EdgeInsets.only(left: 10),
@@ -77,9 +47,10 @@ class JobsPage extends StatelessWidget {
                     const Spacer(),
                     TextButton(
                         onPressed: () async {
-                          await provider.getAllJobs(context);
-                          RouteNavigator.pushRoute(
-                              context, const ViewPostedJobs());
+                          await provider.getAllJobs(context).then((value) => {
+                                RouteNavigator.pushRoute(
+                                    context, const ViewPostedJobs())
+                              });
                         },
                         child: const Text(
                           'Your Jobs ->',

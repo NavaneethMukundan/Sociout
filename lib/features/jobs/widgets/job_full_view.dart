@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sociout/features/jobs/model/posted_job.dart';
 import 'package:sociout/utils/colors.dart';
@@ -33,11 +35,11 @@ class JobDetailsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               kheight20,
-              const Center(
+              Center(
                 child: CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(
-                      'https://blog.hubspot.com/hubfs/image8-2.jpg'),
+                  radius: 60,
+                  backgroundImage: MemoryImage(
+                      const Base64Decoder().convert(jobModel.image.toString())),
                 ),
               ),
               kheight20,

@@ -3,13 +3,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:sociout/utils/colors.dart';
+import 'package:sociout/utils/route.dart';
+
+import '../controller/job_post.dart';
 
 class ImageObtainWidget extends StatelessWidget {
-         ImageObtainWidget({super.key});
+  ImageObtainWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final control = Provider.of<JobPostController>(context);
     return Column(
       children: [
         GestureDetector(
@@ -26,6 +31,7 @@ class ImageObtainWidget extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             onPressed: () {
+                              RouteNavigator.popRoute(context);
                               getImageFromCamera();
                             },
                             style: ElevatedButton.styleFrom(
@@ -51,7 +57,8 @@ class ImageObtainWidget extends StatelessWidget {
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              getImageFromGallery();
+                              RouteNavigator.popRoute(context);
+                              control.getImageFromGallery();
                             },
                             style: ElevatedButton.styleFrom(
                                 elevation: 0, backgroundColor: Colors.white),
@@ -89,15 +96,6 @@ class ImageObtainWidget extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String newImage = "";
-  getImageFromGallery() async {
-    XFile? pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    final bytes = File(pickedFile!.path).readAsBytesSync();
-    newImage = base64Encode(bytes);
-    //notifyListeners();
   }
 
   String cameraImage = '';
