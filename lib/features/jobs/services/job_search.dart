@@ -18,9 +18,10 @@ class JobSearchServies {
 
       try {
         final response = await dio.post(Url().search, data: data.toJson());
-                                                              
+
         if (response.statusCode! >= 200 && response.statusCode! <= 299) {
           log("Search is Working");
+          log(response.toString());
           return JobSearchModelResponse.fromJson(response.data);
         } else {
           return JobSearchModelResponse(

@@ -33,7 +33,42 @@ class JobsPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const JobSearchPage(),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      RouteNavigator.pushRoute(context, const JobSearchPage());
+                    },
+                    child: Container(
+                      height: 60,
+                      width: 280,
+                      decoration: BoxDecoration(
+                          color: kWhite,
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: kBlack)),
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 12, top: 20),
+                        child: Text(
+                          'Search',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: kBlack,
+                          minimumSize: const Size(50, 50)),
+                      child: const Icon(
+                        Icons.filter_list,
+                        color: kWhite,
+                      ))
+                ],
+              ),
               kheight20,
               Padding(
                 padding: const EdgeInsets.only(left: 10),
