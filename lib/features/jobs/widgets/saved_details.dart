@@ -1,18 +1,21 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:sociout/features/jobs/model/posted_job.dart';
+import 'package:provider/provider.dart';
+import 'package:sociout/features/jobs/controller/get_saved.dart';
+import 'package:sociout/features/jobs/controller/post_save.dart';
+import 'package:sociout/features/jobs/model/get_saved_job.dart';
 import 'package:sociout/utils/colors.dart';
 import 'package:sociout/utils/constraints.dart';
 import 'package:sociout/utils/route.dart';
 
-class JobDetailsPage extends StatelessWidget {
-  const JobDetailsPage({super.key, required this.jobModel});
+class SavedDetailsPage extends StatelessWidget {
+  const SavedDetailsPage({super.key, required this.searchModel});
 
-  final Postedjobsmodel jobModel;
+  final GetSaved searchModel;
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<JobSaveController>(context);
+    final saveProvider = Provider.of<SavedJobsController>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -37,15 +40,14 @@ class JobDetailsPage extends StatelessWidget {
               kheight20,
               Center(
                 child: CircleAvatar(
-                  radius: 60,
-                  backgroundImage: MemoryImage(
-                      const Base64Decoder().convert(jobModel.image.toString())),
-                ),
+                    radius: 60,
+                    backgroundImage:
+                        NetworkImage(searchModel.image.toString())),
               ),
               kheight20,
               Center(
                 child: Text(
-                  jobModel.designation.toString(),
+                  searchModel.designation.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -63,7 +65,7 @@ class JobDetailsPage extends StatelessWidget {
                   kWidth10,
                   Expanded(
                     child: Text(
-                      jobModel.jobType.toString(),
+                      searchModel.jobType.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -78,7 +80,7 @@ class JobDetailsPage extends StatelessWidget {
                   kWidth10,
                   Expanded(
                     child: Text(
-                      jobModel.state.toString(),
+                      searchModel.state.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -93,7 +95,7 @@ class JobDetailsPage extends StatelessWidget {
                   kWidth10,
                   Expanded(
                     child: Text(
-                      jobModel.jobFor.toString(),
+                      searchModel.jobFor.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -119,7 +121,7 @@ class JobDetailsPage extends StatelessWidget {
                   ),
                   kWidth10,
                   Text(
-                    jobModel.company.toString(),
+                    searchModel.company.toString(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -130,7 +132,7 @@ class JobDetailsPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 5, left: 20),
                 child: Text(
-                  " ${jobModel.place.toString()} , ${jobModel.state.toString()} , ${jobModel.country.toString()}",
+                  " ${searchModel.place.toString()} , ${searchModel.state.toString()} , ${searchModel.country.toString()}",
                   style: const TextStyle(
                       fontSize: 17, fontWeight: FontWeight.w400),
                 ),
@@ -153,7 +155,7 @@ class JobDetailsPage extends StatelessWidget {
                   ),
                   kWidth10,
                   Text(
-                    jobModel.jobType.toString(),
+                    searchModel.jobType.toString(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -169,7 +171,7 @@ class JobDetailsPage extends StatelessWidget {
                   ),
                   kWidth10,
                   Text(
-                    jobModel.jobFor.toString(),
+                    searchModel.jobFor.toString(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -185,11 +187,11 @@ class JobDetailsPage extends StatelessWidget {
                   ),
                   kWidth10,
                   Text(
-                    'Salary  ${jobModel.salaryMin.toString()} - ${jobModel.salaryMax.toString()} LPA',
+                    'Salary  ₹ ${searchModel.salaryMin.toString()} - ${searchModel.salaryMax.toString()}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                        fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
@@ -200,7 +202,7 @@ class JobDetailsPage extends StatelessWidget {
               ),
               kheight20,
               Text(
-                jobModel.description.toString(),
+                searchModel.description.toString(),
                 maxLines: 50,
                 overflow: TextOverflow.ellipsis,
                 style:
@@ -210,7 +212,9 @@ class JobDetailsPage extends StatelessWidget {
               Row(
                 children: [
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        //provider.postSaveButton(context, searchModel);
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: kBlack,
                           minimumSize: const Size(60, 50)),

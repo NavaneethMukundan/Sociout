@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sociout/features/jobs/controller/posted_job.dart';
+import 'package:sociout/features/jobs/view/jobs_ave.dart';
 import 'package:sociout/features/jobs/widgets/job_full_view.dart';
 import 'package:sociout/utils/colors.dart';
 import 'package:sociout/utils/constraints.dart';
@@ -37,7 +38,9 @@ class ViewPostedJobs extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                RouteNavigator.pushRoute(context, const SavedJobPage());
+              },
               icon: const Icon(
                 Icons.bookmark_added_rounded,
                 color: kBlack,
@@ -143,12 +146,12 @@ class ViewPostedJobs extends StatelessWidget {
                                         kheight,
                                         Expanded(
                                           child: Text(
-                                            " ₹${provider.alljobs[index].salaryMax}",
+                                            "${provider.alljobs[index].salaryMax} LPA",
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: const TextStyle(
                                                 fontSize: 18,
-                                                fontWeight: FontWeight.w400,
+                                                fontWeight: FontWeight.bold,
                                                 color: kBlack),
                                           ),
                                         ),

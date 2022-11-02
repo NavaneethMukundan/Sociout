@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:sociout/features/jobs/model/job_search.dart';
 import 'package:sociout/features/jobs/model/job_search_response.dart';
@@ -18,7 +20,7 @@ class JobSearchController extends ChangeNotifier {
       JobSearchModel searchObj =
           JobSearchModel(designation: searchController.text);
 
-      JobSearchModelResponse? jobSearchModelResponse =
+      ModelSearch? jobSearchModelResponse =
           await JobSearchServies().jobSearchRepo(searchObj, context);
 
       if (jobSearchModelResponse == null) {
@@ -26,13 +28,18 @@ class JobSearchController extends ChangeNotifier {
             .showSnackBar(ShowDialogs.popUp('No Response'));
         isLoadingFalse();
         return;
-      } else if (jobSearchModelResponse.success == "false") {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(ShowDialogs.popUp('Something Went Wrong'));
-        isLoadingFalse();
-        return;
-      } else {
-        searchResponse = jobSearchModelResponse as List<JobSearchModelResponse>;
+      }
+      //  else if (jobSearchModelResponse.success == "false") {
+      //   ScaffoldMessenger.of(context)
+      //       .showSnackBar(ShowDialogs.popUp('Something Went Wrong'));
+      //   isLoadingFalse();
+      //   return;
+      // }
+      else {
+        log('============');
+        searchResponse.clear();
+        searchResponse.addAll(jobSearchModelResponse.listOfSearchResponse!);
+        log(searchResponse.first.designation.toString());
         isLoadingFalse();
         return;
       }

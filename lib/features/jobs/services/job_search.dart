@@ -11,8 +11,7 @@ import 'package:sociout/utils/snackbar.dart';
 import 'package:sociout/utils/url.dart';
 
 class JobSearchServies {
-  Future<JobSearchModelResponse?> jobSearchRepo(
-      JobSearchModel data, context) async {
+  Future<ModelSearch> jobSearchRepo(JobSearchModel data, context) async {
     if (await connectionCheck()) {
       Dio dio = await Interceptorapi().getApiUser();
 
@@ -21,16 +20,16 @@ class JobSearchServies {
 
         if (response.statusCode! >= 200 && response.statusCode! <= 299) {
           log("Search is Working");
-          log(response.toString());
-          return JobSearchModelResponse.fromJson(response.data);
+          // log(response.toString());
+          return ModelSearch.fromJson(response.data);
         } else {
-          return JobSearchModelResponse(
-              message: 'Something went wrong while Search');
+          return ModelSearch(message: "Something went wrong");
+          // return JobSearchModelResponse(
+          //     message: 'Something went wrong while Search');
         }
       } on DioError catch (e) {
         if (e.response!.statusCode == 401) {
-          return JobSearchModelResponse(
-              message: "Invalid User or Something went wrong");
+          return ModelSearch(message: "Invalid User or Something went wrong");
         } else {
           final errorMessage = DioException.fromDioError(e).toString();
           ScaffoldMessenger.of(context)
@@ -42,6 +41,6 @@ class JobSearchServies {
           .showSnackBar(ShowDialogs.popUp("Please check internet connection"));
     }
 
-    return null;
+    return ModelSearch(message: "Something went wrong ! Please try again");
   }
 }

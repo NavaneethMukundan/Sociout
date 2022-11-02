@@ -8,44 +8,58 @@ List<JobSearchModelResponse> getFromJson(String str) =>
     List<JobSearchModelResponse>.from(
         json.decode(str).map((x) => JobSearchModelResponse.fromJson(x)));
 
-String getToJson(List<JobSearchModelResponse> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+class ModelSearch {
+  List<JobSearchModelResponse>? listOfSearchResponse;
+  String? message;
+  ModelSearch({this.listOfSearchResponse, this.message});
+  factory ModelSearch.fromJson(List<dynamic> json) {
+    return ModelSearch(
+      listOfSearchResponse: json == []
+          ? []
+          : List<JobSearchModelResponse>.from(
+              json.map((x) => JobSearchModelResponse.fromJson(x))),
+    );
+  }
+}
 
 class JobSearchModelResponse {
-  JobSearchModelResponse({
-    this.id,
-    this.userId,
-    this.company,
-    this.place,
-    this.state,
-    this.country,
-    this.designation,
-    this.jobFor,
-    this.description,
-    this.vacancy,
-    this.jobType,
-    this.salaryMin,
-    this.salaryMax,
-    this.applicationStatus,
-    this.isBlocked,
-    this.isOpen,
-    this.reportMessages,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
-    this.success,
-    this.status,
-    this.message,
-  });
+  JobSearchModelResponse(
+      {this.id,
+      this.userId,
+      this.company,
+      this.place,
+      this.state,
+      this.country,
+      this.designation,
+      this.jobFor,
+      this.description,
+      this.vacancy,
+      this.jobType,
+      this.salaryMin,
+      this.salaryMax,
+      this.applicationStatus,
+      this.isBlocked,
+      this.isOpen,
+      this.reportMessages,
+      this.createdAt,
+      this.updatedAt,
+      this.v,
+      this.success,
+      this.status,
+      this.message,
+      this.saved,
+      this.image});
   String? success;
   String? status;
   String? message;
+  bool? saved;
   String? id;
   String? userId;
   String? company;
   String? place;
   String? state;
   String? country;
+  String? image;
   String? designation;
   String? jobFor;
   String? description;
@@ -63,6 +77,8 @@ class JobSearchModelResponse {
 
   factory JobSearchModelResponse.fromJson(Map<String, dynamic> json) =>
       JobSearchModelResponse(
+        image: json["image"],
+        saved: json["saved"],
         success: json["success"],
         status: json["status"],
         message: json["message"],
@@ -90,27 +106,5 @@ class JobSearchModelResponse {
         v: json["__v"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "_id": id,
-        "userId": userId,
-        "company": company,
-        "place": place,
-        "state": state,
-        "country": country,
-        "designation": designation,
-        "jobFor": jobFor,
-        "description": description,
-        "vacancy": vacancy,
-        "jobType": jobType,
-        "salaryMin": salaryMin,
-        "salaryMax": salaryMax,
-        "applicationStatus":
-            List<dynamic>.from(applicationStatus!.map((x) => x)),
-        "isBlocked": isBlocked,
-        "isOpen": isOpen,
-        "reportMessages": List<dynamic>.from(reportMessages!.map((x) => x)),
-        "createdAt": createdAt!.toIso8601String(),
-        "updatedAt": updatedAt!.toIso8601String(),
-        "__v": v,
-      };
+  toJson() {}
 }

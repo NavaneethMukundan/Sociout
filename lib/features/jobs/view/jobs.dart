@@ -81,16 +81,17 @@ class JobsPage extends StatelessWidget {
                     ),
                     const Spacer(),
                     TextButton(
-                        onPressed: () async {
-                          await provider.getAllJobs(context).then((value) => {
-                                RouteNavigator.pushRoute(
-                                    context, const ViewPostedJobs())
-                              });
-                        },
-                        child: const Text(
-                          'Your Jobs ->',
-                          style: TextStyle(color: kBlack),
-                        ))
+                      onPressed: () async {
+                        await provider.getAllJobs(context).then((value) => {
+                              RouteNavigator.pushRoute(
+                                  context, const ViewPostedJobs())
+                            });
+                      },
+                      child: const Text(
+                        'Your Jobs ->',
+                        style: TextStyle(color: kBlack),
+                      ),
+                    )
                   ],
                 ),
               ),
