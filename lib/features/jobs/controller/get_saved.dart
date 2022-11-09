@@ -7,6 +7,7 @@ import 'package:sociout/utils/snackbar.dart';
 class SavedJobsController extends ChangeNotifier {
   List<GetSaved> alljobs = [];
   bool isLoading = false;
+  bool buttonColor = false;
 
   SavedJobsController(context) {
     getAllSavedJobs(context);

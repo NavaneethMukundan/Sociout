@@ -51,6 +51,7 @@ class SignupScreen extends StatelessWidget {
                   iconcolor: kBlack,
                   controller: provider.userNameController,
                   validatorErrorMessage: "Please enter Name",
+                  text: '',
                 ),
                 kheight20,
                 const Text(
@@ -59,6 +60,7 @@ class SignupScreen extends StatelessWidget {
                 ),
                 kheight,
                 TextFormWidget(
+                  text: '',
                   hiddentext: false,
                   icon: Icons.email_outlined,
                   hintText: 'Email',
@@ -78,6 +80,7 @@ class SignupScreen extends StatelessWidget {
                 ),
                 kheight,
                 TextFormWidget(
+                  text: '',
                   hiddentext: false,
                   icon: Icons.phone_android_outlined,
                   hintText: 'Mobile Number',
@@ -99,6 +102,7 @@ class SignupScreen extends StatelessWidget {
                 Consumer<SignupController>(
                   builder: (context, value, child) {
                     return TextFormWidget(
+                      text: '',
                       sufixIcon: IconButton(
                           onPressed: () {
                             provider.isHidden = !provider.isHidden;

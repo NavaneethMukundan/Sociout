@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sociout/features/jobs/controller/get_saved.dart';
-import 'package:sociout/features/jobs/widgets/saved_details.dart';
+import 'package:sociout/features/jobs/widgets/saved/saved_details.dart';
 import 'package:sociout/utils/colors.dart';
 import 'package:sociout/utils/constraints.dart';
 import 'package:sociout/utils/route.dart';
@@ -14,13 +14,23 @@ class SavedJobPage extends StatelessWidget {
     final provider = Provider.of<SavedJobsController>(context);
     return Scaffold(
         appBar: AppBar(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30))),
           backgroundColor: kBlack,
-          title: const Text('Saved Jobs'),
+          elevation: 0,
+          toolbarHeight: 80,
+          title: const Text(
+            'Saved Jobs',
+            style: TextStyle(
+                fontSize: 25, fontWeight: FontWeight.bold, color: kWhite),
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(left: 16, right: 16),
               child: Column(
                 children: [
                   ListView.separated(
@@ -32,18 +42,20 @@ class SavedJobPage extends StatelessWidget {
                             RouteNavigator.pushRoute(
                                 context,
                                 SavedDetailsPage(
-                                    searchModel: provider.alljobs[index]));
+                                    saveModel: provider.alljobs[index]));
                           },
                           child: SizedBox(
-                              height: 200,
+                              height: 170,
                               child: Card(
                                 margin: const EdgeInsets.all(13),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
                                 elevation: 5,
-                                color: Colors.white70,
+                                color: const Color.fromARGB(255, 213, 213, 213),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    kheight20,
+                                    //kheight20,
                                     Row(
                                       children: [
                                         kWidth10,
@@ -67,87 +79,84 @@ class SavedJobPage extends StatelessWidget {
                                             ))
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 15),
-                                          child: Text(
-                                              " ${provider.alljobs[index].salaryMin.toString()} - ${provider.alljobs[index].salaryMax.toString()} LPA"),
-                                        ),
-                                        kWidth10,
-                                        Container(
-                                          height: 25,
-                                          width: 80,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: const Color.fromARGB(
-                                                  255, 224, 223, 223)),
-                                          child: Center(
-                                              child: Text(provider
-                                                  .alljobs[index].jobType
-                                                  .toString())),
-                                        )
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            margin:
+                                                const EdgeInsets.only(left: 10),
+                                            height: 55,
+                                            width: 55,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: const Color.fromARGB(
+                                                    255, 224, 223, 223),
+                                                image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(
+                                                      provider
+                                                          .alljobs[index].image
+                                                          .toString(),
+                                                    ))),
+                                          ),
+                                          kWidth,
+                                          Column(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 5),
+                                                child: Text(
+                                                  provider
+                                                      .alljobs[index].company
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 5),
+                                                child: Text(
+                                                  provider.alljobs[index].place
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Spacer(),
+                                          Container(
+                                            height: 25,
+                                            width: 80,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: kWhite),
+                                            child: Center(
+                                                child: Text(provider
+                                                    .alljobs[index].jobType
+                                                    .toString())),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                    kheight20,
+                                    kheight,
                                     Row(
                                       children: [
                                         kWidth10,
-                                        Container(
-                                          height: 55,
-                                          width: 55,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: const Color.fromARGB(
-                                                  255, 224, 223, 223),
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: NetworkImage(
-                                                    provider
-                                                        .alljobs[index].image
-                                                        .toString(),
-                                                  ))),
-                                        ),
-                                        kWidth10,
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 5),
-                                              child: Text(
-                                                provider.alljobs[index].company
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 5),
-                                              child: Text(
-                                                provider.alljobs[index].place
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.grey),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const Spacer(),
                                         Text(
-                                          'Posted \n${provider.alljobs[index].createdAt!.day} : ${provider.alljobs[index].createdAt!.month} : ${provider.alljobs[index].createdAt!.year}',
+                                          'Posted Date:     ${provider.alljobs[index].createdAt!.day} : ${provider.alljobs[index].createdAt!.month} : ${provider.alljobs[index].createdAt!.year}',
                                           style: const TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.w500),
+                                              color: kBlack,
+                                              fontWeight: FontWeight.w700),
                                         ),
                                         kWidth10,
                                       ],
@@ -158,7 +167,9 @@ class SavedJobPage extends StatelessWidget {
                         );
                       },
                       separatorBuilder: (context, index) {
-                        return kheight;
+                        return const Divider(
+                          thickness: 1,
+                        );
                       },
                       itemCount: provider.alljobs.length),
                 ],

@@ -52,7 +52,7 @@ class SigninPage extends StatelessWidget {
                   radius: 10,
                   iconcolor: kBlack,
                   controller: provider.emailController,
-                  validatorErrorMessage: "Please enter Email",
+                  validatorErrorMessage: "Please enter Email", text: '',
                 ),
                 kheight20,
                 const Text(
@@ -83,7 +83,7 @@ class SigninPage extends StatelessWidget {
                       iconcolor: kBlack,
                       controller: provider.passwordController,
                       hiddentext: value.isHidden ? false : true,
-                      validatorErrorMessage: "Please enter Password",
+                      validatorErrorMessage: "Please enter Password", text: '',
                     );
                   },
                 ),

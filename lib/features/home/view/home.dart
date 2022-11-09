@@ -13,14 +13,14 @@ class HomePage extends StatelessWidget {
     final provider = Provider.of<HomeController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 0.2,
         toolbarHeight: 70,
         backgroundColor: kWhite,
         title: Text(
           'Sociout',
           style: TextStyle(
               fontSize: 40,
-              color: mainColor,
+              color: kBlack,
               fontFamily: GoogleFonts.teko(
                 fontWeight: FontWeight.w500,
               ).fontFamily),

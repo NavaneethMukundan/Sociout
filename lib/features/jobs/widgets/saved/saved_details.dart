@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sociout/features/jobs/controller/post_save.dart';
-import 'package:sociout/features/jobs/model/job_search_response.dart';
+import 'package:sociout/features/jobs/model/get_saved_job.dart';
+import 'package:sociout/features/jobs/view/job_apply.dart';
 import 'package:sociout/utils/colors.dart';
 import 'package:sociout/utils/constraints.dart';
 import 'package:sociout/utils/route.dart';
 
-class SearchDetailView extends StatelessWidget {
-  const SearchDetailView({
-    super.key,
-    required this.searchModel,
-  });
+class SavedDetailsPage extends StatelessWidget {
+  const SavedDetailsPage({super.key, required this.saveModel});
 
-  final JobSearchModelResponse searchModel;
+  final GetSaved saveModel;
 
   @override
   Widget build(BuildContext context) {
-    final provide = Provider.of<JobSaveController>(context);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -33,9 +27,7 @@ class SearchDetailView extends StatelessWidget {
             )),
         actions: [
           IconButton(
-              onPressed: () {
-                provide.postSaveButton(context, searchModel);
-              },
+              onPressed: () {},
               icon: const Icon(
                 Icons.bookmark_border_rounded,
                 color: kBlack,
@@ -54,7 +46,7 @@ class SearchDetailView extends StatelessWidget {
               Center(
                 child: CircleAvatar(
                   radius: 60,
-                  backgroundImage: NetworkImage(searchModel.image.toString()),
+                  backgroundImage: NetworkImage(saveModel.image.toString()),
                 ),
               ),
               kheight20,
@@ -62,7 +54,7 @@ class SearchDetailView extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Text(
-                    searchModel.designation.toString(),
+                    saveModel.designation.toString(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -78,7 +70,7 @@ class SearchDetailView extends StatelessWidget {
                   kWidth10,
                   Expanded(
                     child: Text(
-                      searchModel.jobType.toString(),
+                      saveModel.jobType.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -87,15 +79,15 @@ class SearchDetailView extends StatelessWidget {
                           color: Color.fromARGB(255, 114, 114, 114)),
                     ),
                   ),
-                  kWidth20,
+                  kWidth10,
                   const Text(
                     '•',
                     style: TextStyle(color: kGrey, fontSize: 20),
                   ),
-                  kWidth20,
+                  kWidth10,
                   Expanded(
                     child: Text(
-                      searchModel.state.toString(),
+                      saveModel.state.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -104,15 +96,15 @@ class SearchDetailView extends StatelessWidget {
                           color: Color.fromARGB(255, 114, 114, 114)),
                     ),
                   ),
-                  kWidth20,
+                  kWidth10,
                   const Text(
                     '•',
                     style: TextStyle(color: kGrey, fontSize: 20),
                   ),
-                  kWidth20,
+                  kWidth10,
                   Expanded(
                     child: Text(
-                      searchModel.jobFor.toString(),
+                      saveModel.jobFor.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -153,7 +145,7 @@ class SearchDetailView extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          "₹${searchModel.salaryMin.toString()} - ${searchModel.salaryMax.toString()} LPA",
+                          "₹${saveModel.salaryMin.toString()} - ${saveModel.salaryMax.toString()} LPA",
                           style: const TextStyle(
                               color: kBlack,
                               fontSize: 17,
@@ -186,7 +178,7 @@ class SearchDetailView extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          searchModel.jobType.toString(),
+                          saveModel.jobType.toString(),
                           style: const TextStyle(
                               color: kBlack,
                               fontSize: 17,
@@ -218,7 +210,7 @@ class SearchDetailView extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          searchModel.jobFor.toString(),
+                          saveModel.jobFor.toString(),
                           style: const TextStyle(
                               color: kBlack,
                               fontSize: 17,
@@ -241,7 +233,7 @@ class SearchDetailView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  searchModel.description.toString(),
+                  saveModel.description.toString(),
                   maxLines: 50,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -249,13 +241,19 @@ class SearchDetailView extends StatelessWidget {
                 ),
               ),
               kheight20,
+              kheight50,
+              kheight40,
             ],
           ),
         ),
       )),
       floatingActionButton: ElevatedButton(
           onPressed: () {
-            //  RouteNavigator.pushRoute(context, const JobApplyPage());
+            RouteNavigator.pushRoute(
+                context,
+                JobApplyPage(
+                  saveModel: saveModel,
+                ));
           },
           style: ElevatedButton.styleFrom(
               backgroundColor: kBlack, minimumSize: const Size(280, 50)),

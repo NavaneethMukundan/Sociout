@@ -14,7 +14,8 @@ class TextFormWidget extends StatelessWidget {
       required this.controller,
       this.hiddentext = true,
       this.sufixIcon,
-      required this.validatorErrorMessage})
+      required this.validatorErrorMessage,
+      required String text})
       : super(key: key);
 
   final IconData icon;

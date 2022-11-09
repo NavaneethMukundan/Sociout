@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sociout/features/create/widgets/popup_menu.dart';
 import 'package:sociout/utils/colors.dart';
+import 'package:sociout/utils/constraints.dart';
 
 class CreatePage extends StatelessWidget {
   const CreatePage({Key? key}) : super(key: key);
@@ -10,14 +11,18 @@ class CreatePage extends StatelessWidget {
     return Scaffold(
         backgroundColor: kWhite,
         appBar: AppBar(
-          elevation: 0,
+          elevation: 1,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30))),
           toolbarHeight: 70,
-          backgroundColor: kWhite,
+          backgroundColor: kBlack,
           title: const Center(
             child: Text(
               'Create Post',
               style: TextStyle(
-                  fontSize: 35, fontWeight: FontWeight.bold, color: kBlack),
+                  fontSize: 35, fontWeight: FontWeight.bold, color: kWhite),
             ),
           ),
         ),
@@ -25,6 +30,7 @@ class CreatePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
+              kheight,
               TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,

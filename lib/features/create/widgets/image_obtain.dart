@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -102,8 +102,16 @@ class ImageObtainWidget extends StatelessWidget {
   getImageFromCamera() async {
     XFile? pickedFile =
         await ImagePicker().pickImage(source: ImageSource.camera);
-    final bytes = File(pickedFile!.path).readAsBytesSync();
-    cameraImage = base64Encode(bytes);
+    final bytes = File(pickedFile!.path);
     //notifyListeners();
   }
+
+  var formData = FormData.fromMap({
+    'name': 'wendux',
+    'file': MultipartFile.fromFile('./text.txt', filename: 'upload.txt'),
+    'files': [
+      MultipartFile.fromFile('./text1.txt', filename: 'text1.txt'),
+      MultipartFile.fromFile('./text2.txt', filename: 'text2.txt'),
+    ]
+  });
 }

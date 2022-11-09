@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sociout/features/create/controller/job_post.dart';
-import 'package:sociout/features/create/view/job_create.dart';
+import 'package:sociout/features/create/widgets/textform.dart';
 import 'package:sociout/utils/constraints.dart';
 
 class RadioButton extends StatelessWidget {

@@ -36,8 +36,7 @@ class SigninController extends ChangeNotifier {
         RouteNavigator.pushRemoveUntil(context, MainScreen());
         _isLoadingFalse();
         return;
-      } else if (loginResponse.success == false ||
-          loginResponse.loggedin != true) {
+      } else if (loginResponse.loggedin == false) {
         ScaffoldMessenger.of(context)
             .showSnackBar(ShowDialogs.popUp('${loginResponse.message}'));
         _isLoadingFalse();

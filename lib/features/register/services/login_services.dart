@@ -12,18 +12,19 @@ class LoginServices {
       try {
         final response = await DioServices.postFunction(
             url: Url().login, value: data.tojson());
-
         if (response.statusCode! >= 200 && response.statusCode! <= 299) {
           log('Login Was Successfull');
+          log(response.statusCode.toString());
           return LoginResponse.fromJson(response.data);
         } else {
-          return LoginResponse.fromJson(response.data);
+          return LoginResponse(message: "Error while Login");
         }
       } on DioError catch (e) {
         if (e.response!.statusCode == 400) {
           return LoginResponse(message: "Email or Password Was Incorrect");
         }
       } catch (e) {
+        log(e.toString());
         return LoginResponse(message: "Something Went Worg");
       }
     } else {

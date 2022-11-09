@@ -1,23 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sociout/features/jobs/controller/post_save.dart';
-import 'package:sociout/features/jobs/model/job_search_response.dart';
+import 'package:sociout/features/jobs/model/posted_job.dart';
 import 'package:sociout/utils/colors.dart';
 import 'package:sociout/utils/constraints.dart';
 import 'package:sociout/utils/route.dart';
 
-class SearchDetailView extends StatelessWidget {
-  const SearchDetailView({
-    super.key,
-    required this.searchModel,
-  });
+class JobDetailsPage extends StatelessWidget {
+  const JobDetailsPage({super.key, required this.jobModel});
 
-  final JobSearchModelResponse searchModel;
+  final Postedjobsmodel jobModel;
 
   @override
   Widget build(BuildContext context) {
-    final provide = Provider.of<JobSaveController>(context);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -33,9 +28,7 @@ class SearchDetailView extends StatelessWidget {
             )),
         actions: [
           IconButton(
-              onPressed: () {
-                provide.postSaveButton(context, searchModel);
-              },
+              onPressed: () {},
               icon: const Icon(
                 Icons.bookmark_border_rounded,
                 color: kBlack,
@@ -54,20 +47,18 @@ class SearchDetailView extends StatelessWidget {
               Center(
                 child: CircleAvatar(
                   radius: 60,
-                  backgroundImage: NetworkImage(searchModel.image.toString()),
+                  backgroundImage: MemoryImage(
+                      const Base64Decoder().convert(jobModel.image.toString())),
                 ),
               ),
               kheight20,
               Center(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Text(
-                    searchModel.designation.toString(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
+                child: Text(
+                  jobModel.designation.toString(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ),
               kheight20,
@@ -78,7 +69,7 @@ class SearchDetailView extends StatelessWidget {
                   kWidth10,
                   Expanded(
                     child: Text(
-                      searchModel.jobType.toString(),
+                      jobModel.jobType.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -95,7 +86,7 @@ class SearchDetailView extends StatelessWidget {
                   kWidth20,
                   Expanded(
                     child: Text(
-                      searchModel.state.toString(),
+                      jobModel.state.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -112,7 +103,7 @@ class SearchDetailView extends StatelessWidget {
                   kWidth20,
                   Expanded(
                     child: Text(
-                      searchModel.jobFor.toString(),
+                      jobModel.jobFor.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -153,7 +144,7 @@ class SearchDetailView extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          "₹${searchModel.salaryMin.toString()} - ${searchModel.salaryMax.toString()} LPA",
+                          "₹${jobModel.salaryMin.toString()} - ${jobModel.salaryMax.toString()} LPA",
                           style: const TextStyle(
                               color: kBlack,
                               fontSize: 17,
@@ -186,7 +177,7 @@ class SearchDetailView extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          searchModel.jobType.toString(),
+                          jobModel.jobType.toString(),
                           style: const TextStyle(
                               color: kBlack,
                               fontSize: 17,
@@ -218,7 +209,7 @@ class SearchDetailView extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          searchModel.jobFor.toString(),
+                          jobModel.jobFor.toString(),
                           style: const TextStyle(
                               color: kBlack,
                               fontSize: 17,
@@ -241,7 +232,7 @@ class SearchDetailView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  searchModel.description.toString(),
+                  jobModel.description.toString(),
                   maxLines: 50,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -253,18 +244,6 @@ class SearchDetailView extends StatelessWidget {
           ),
         ),
       )),
-      floatingActionButton: ElevatedButton(
-          onPressed: () {
-            //  RouteNavigator.pushRoute(context, const JobApplyPage());
-          },
-          style: ElevatedButton.styleFrom(
-              backgroundColor: kBlack, minimumSize: const Size(280, 50)),
-          child: const Text(
-            'Apply Now',
-            style: TextStyle(fontSize: 17),
-          )),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
     );
   }
 }

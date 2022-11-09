@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sociout/features/create/controller/job_post.dart';
 import 'package:sociout/features/create/widgets/image_obtain.dart';
 import 'package:sociout/features/create/widgets/radio_button.dart';
+import 'package:sociout/features/create/widgets/textform.dart';
 import 'package:sociout/utils/colors.dart';
 import 'package:sociout/utils/constraints.dart';
 import 'package:sociout/utils/route.dart';
@@ -232,48 +233,6 @@ class JobCreate extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class TextFormWidget extends StatelessWidget {
-  const TextFormWidget(
-      {Key? key,
-      required this.text,
-      required this.controller,
-      required this.validatorErrorMessage,
-      this.keyboardtype = TextInputType.number})
-      : super(key: key);
-  final String text;
-  final TextEditingController controller;
-  final String validatorErrorMessage;
-  final TextInputType keyboardtype;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      keyboardType: keyboardtype,
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: text,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: kBlack),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: kBlack),
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return validatorErrorMessage;
-        } else {
-          return null;
-        }
-      },
     );
   }
 }
